@@ -1,6 +1,10 @@
 # Hardware mapping (YAML)
 
-`config/hardware/active.yaml` is the **single source of truth** for Lucy hardware: RP2040 boards, actuators, and finger pressure sensors. The **`lucy_config_generator`** package (in `lucy_ros_packages`) reads this file and emits firmware YAML, `description/ros2_control/inmoov_ros2_control.xacro`, and `config/controllers.yaml`.
+`config/hardware/active.yaml` is the **single source of truth** for Lucy hardware: RP2040 boards, actuators, and finger pressure sensors. The **`lucy_config_generator`** package (in `lucy_ros_packages`) reads this file and emits per-board **firmware YAML**, `description/ros2_control/inmoov_ros2_control.xacro`, and `config/controllers.yaml`.
+
+**Architecture (system schematic, no duplicate charts here):**  
+[`lucy_ws/docs/architecture/README.md`](../../../docs/architecture/README.md) ·  
+[`lucy_ws/docs/architecture/overview.md`](../../../docs/architecture/overview.md)
 
 For **InMoov i1 vs i2** scope and how to extend the YAML with **head / expression** actuators when the URDF evolves, see [inmoov_i2.md](inmoov_i2.md).
 
@@ -17,11 +21,11 @@ For **InMoov i1 vs i2** scope and how to extend the YAML with **head / expressio
 
 - **`version`**: schema version (integer, currently `1`).
 - **`robot_name`**: logical name (e.g. `inmoov`).
-- **`passive_urdf_joints`** / **`ignore_urdf_joints`** *(optional)*: string lists merged together; URDF joints named here are **excluded** from the pipeline **“not mapped to any actuator”** cross-check warning. **Synonyms** (same validation rules): `urdf_passive`, `urdf_passive_joints`, `urdf_ignore`, `urdf_ignore_joints`. Cross-check matches **`actuators[].urdf_joint`** against the URDF (not actuator **`id`**). Does **not** remove joints from the URDF or generation elsewhere — only suppresses that informational warning on save.
+- **`passive_urdf_joints`** / **`ignore_urdf_joints`** *(optional)*: string lists merged together; URDF joints named here are **excluded** from the pipeline **“not mapped to any actuator”** cross-check warning. **Synonyms** (same validation rules): `urdf_passive`, `urdf_passive_joints`, `urdf_ignore`, `urdf_ignore_joints`. Cross-check matches **`actuators[].urdf_joint`** against the URDF (not actuator **`id`**). Does **not** remove joints from the URDF or generation elsewhere - only suppresses that informational warning on save.
   - The control panel **Configuration** page also treats `passive_urdf_joints` as the **assignable pool** for new actuators: the **JOINT** dropdown lists every passive entry minus anything in `ignore_urdf_joints` and minus joints already mapped to another actuator. Picking a joint **removes** it from `passive_urdf_joints`; deleting an actuator (or clearing its joint) **re-adds** the freed joint (`appendPassiveUrdfJointIfUnassigned`), so the two lists stay in sync as the operator edits.
-- **`firmware`**: `source_dir` (typically `lucy_embedded_firmware`), `build_dir` — paths relative to the workspace `src/` for the pipeline.
+- **`firmware`**: `source_dir` (typically `lucy_embedded_firmware`), `build_dir` - paths relative to the workspace `src/` for the pipeline.
 - **`controller_manager`**: e.g. `update_rate`.
-- **`boards`**: ordered map of board id → `serial_id` (optional USB serial for `picotool --ser`, alphanumeric or empty), **`board_class`** (`internal_servo_only` \| `internal_servo_i2c_pwm` \| `bus_servo_only`), optional **`slave_address`** (Modbus, default 1), **`internal_servo_slots`** (max valid `physical_pin` for actuators on that board), firmware target, compile definition, actuator/sensor topics, and `controller` (`name`, `type`). Optional **`firmware_crate`** overrides the default crate for that `board_class`. **Order** of keys is the order of generated ros2_control blocks and controller sections. **Board id** is also the firmware YAML basename: `config_<board_id>.yaml`. **No `/dev/ttyACM*`** here — serial devices are launch-time (`lucy_bringup` args), not committed hardware truth.
+- **`boards`**: ordered map of board id → `serial_id` (optional USB serial for `picotool --ser`, alphanumeric or empty), **`board_class`** (`internal_servo_only` \| `internal_servo_i2c_pwm` \| `bus_servo_only`), optional **`slave_address`** (Modbus, default 1), **`internal_servo_slots`** (max valid `physical_pin` for actuators on that board), firmware target, compile definition, actuator/sensor topics, and `controller` (`name`, `type`). Optional **`firmware_crate`** overrides the default crate for that `board_class`. **Order** of keys is the order of generated ros2_control blocks and controller sections. **Board id** is also the firmware YAML basename: `config_<board_id>.yaml`. **No `/dev/ttyACM*`** here - serial devices are launch-time (`lucy_bringup` args), not committed hardware truth.
 - **`actuators`**: list of actuators with `urdf_joint` (must match URDF), `board`, `virtual_pin` (contiguous per board, used for host SHM / ros2_control ordering), `physical_pin` (**1..`boards.<id>.internal_servo_slots`**: becomes named channel `ServoN` in generated firmware YAML; board crate maps channel → GPIO), `servo_type`, calibration (`offset_rad`, `direction`, `scale`), limits (`servo_*_rad`), `enabled` (if `false`, the row is still listed in generated `ros2_control` and trajectory controllers, but omitted from firmware so the servo is not driven on the Pico).
 - **`sensors`**: finger pressure sensors; `associated_actuator` references an actuator `id`. Emitted into firmware YAML with channel `ADC{n}`.
 
@@ -37,7 +41,7 @@ Degree field names (`*_deg`) are **rejected** by schema validation.
 
 Each `urdf_joint` has `<limit lower="…" upper="…"/>` in the URDF (radians). **`lucy_config_generator`** copies those onto each actuated joint’s ros2_control position **command_interface** as `<param name="min">` / `<param name="max">` in `description/ros2_control/inmoov_ros2_control.xacro`. **LucySystemHardware** (real hardware and RViz/mock) clamps `hw_commands_` to that envelope before converting to servo radians, so MoveIt, teleop, CLI, and the LCP can command past the URDF wall in the UI but the stack stops at the realized angle. `/joint_states` reports the clamped joint position.
 
-**Gazebo** uses stock **`gz_ros2_control/GazeboSimSystem`**, which does **not** apply those `min`/`max` params in `write()` — only **LucySystemHardware** enforces the ros2_control URDF envelope today. Gazebo may still respect joint limits from the spawned model/physics depending on how the world is built; that is separate from ros2_control clamping. After changing generated limits for real/mock, reload the control stack; for Gazebo topology changes, **restart Gazebo** so `gz_ros2_control` reloads the URDF.
+**Gazebo** uses stock **`gz_ros2_control/GazeboSimSystem`**, which does **not** apply those `min`/`max` params in `write()` - only **LucySystemHardware** enforces the ros2_control URDF envelope today. Gazebo may still respect joint limits from the spawned model/physics depending on how the world is built; that is separate from ros2_control clamping. After changing generated limits for real/mock, reload the control stack; for Gazebo topology changes, **restart Gazebo** so `gz_ros2_control` reloads the URDF.
 
 RViz-only / mock hardware uses **`lucy_ros2_control/LucySystemHardware`** with `publish_actuators:=false` so URDF limits are enforced the same way as on real hardware, without Modbus.
 
@@ -52,7 +56,7 @@ servo_rad = joint_rad / (direction * scale) + offset_rad
 
 - **`direction`**: `+1` or `-1` if the horn is mounted opposite the positive URDF axis.
 - **`scale`**: ratio between a change in **commanded joint angle** and **servo angle** when the linkage is not 1:1.
-- **`offset_rad`**: shift so URDF “zero” matches the real neutral assembly (e.g. `offset_rad: 1.5708` with a 0–π servo maps URDF 0 to servo π/2).
+- **`offset_rad`**: shift so URDF “zero” matches the real neutral assembly (e.g. `offset_rad: 1.5708` with a 0-π servo maps URDF 0 to servo π/2).
 
 These are **calibration between ros2_control / URDF joint commands and the servo command**, not an RViz-only layer. Generated ros2_control params are the source of truth for the plugin and for the panel’s publish/subscribe conversion.
 
@@ -67,7 +71,7 @@ Older InMoov-style actuator tables often name torso PCA pins **5** and **6** as 
 
 ## Head and expression actuators
 
-Extra head DOFs (eyelids, cheeks, separate eyeball drivers, and so on) are **not** listed in `active.yaml` until the URDF exports matching joint names and each row is validated on hardware. See [inmoov_i2.md](inmoov_i2.md) for a YAML appendix for a future **InMoov i2**–style extension.
+Extra head DOFs (eyelids, cheeks, separate eyeball drivers, and so on) are **not** listed in `active.yaml` until the URDF exports matching joint names and each row is validated on hardware. See [inmoov_i2.md](inmoov_i2.md) for a YAML appendix for a future **InMoov i2**-style extension.
 
 ## Simulation mode (control panel)
 

@@ -2,25 +2,25 @@
 
 ## What this repository implements today
 
-**`inmoov_urdf`** ships an **InMoov i1–line** robot description under `description/` (meshes, joints, ros2_control xacro). The hardware YAML in **`config/hardware/active.yaml`** therefore lists only actuators and sensors that match **that** URDF and the current Lucy wiring (arms, torso shoulder Y, fingers, pressure sensors, and so on).
+**`inmoov_urdf`** ships an **InMoov i1-line** robot description under `description/` (meshes, joints, ros2_control xacro). The hardware YAML in **`config/hardware/active.yaml`** therefore lists only actuators and sensors that match **that** URDF and the current Lucy wiring (arms, torso shoulder Y, fingers, pressure sensors, and so on).
 
-It does **not** list **InMoov i2–style** head and expression actuators (extra eyelids, cheeks, brows, separate eyeball drivers, and so on) because those joints are either absent from the processed URDF or not yet committed to a single wiring story in this repo.
+It does **not** list **InMoov i2-style** head and expression actuators (extra eyelids, cheeks, brows, separate eyeball drivers, and so on) because those joints are either absent from the processed URDF or not yet committed to a single wiring story in this repo.
 
 ## Why keep talking about i2?
 
 A future evolution might split or extend into an **`inmoov_i2`** description package with additional head DOFs. When that happens, the same **YAML schema** as `active.yaml` still applies: each new servo needs a row under **`actuators:`** with a **`urdf_joint`** that exactly matches the joint name in **`robot_description`**, plus board, pins, calibration, and limits.
 
-This document is the **bridge**: it explains that gap and gives a **copy-paste-oriented appendix** in YAML form. Treat every **`urdf_joint`** in the appendix as **something you must reconcile** with the actual i2 (or extended i1) URDF—some entries use **current i1** head joint names where they exist; others use **placeholder** names for expression axes that the legacy xacro named differently from any joint in today’s URDF.
+This document is the **bridge**: it explains that gap and gives a **copy-paste-oriented appendix** in YAML form. Treat every **`urdf_joint`** in the appendix as **something you must reconcile** with the actual i2 (or extended i1) URDF-some entries use **current i1** head joint names where they exist; others use **placeholder** names for expression axes that the legacy xacro named differently from any joint in today’s URDF.
 
 ## How to add i2 head actuators to the YAML
 
 1. **Freeze URDF joint names** in the description package (each DOF exactly one `joint name="..."` in the generated URDF).
 2. For each servo on **`rp2040_torso_head`**, append one list element to **`actuators:`** in `active.yaml` (or a preset under `configs/`).
 3. Assign **`virtual_pin`** as **contiguous integers per board**, starting after the last existing actuator on that board (today, shoulder Y uses `0` and `1` on `rp2040_torso_head`).
-4. Set **`physical_pin`** to the PCA9685 channel (or equivalent) from your **actual** schematic. The appendix below uses **example** channels (jaw on **7**, cheeks **8–9**, and so on through **22**) typical of full InMoov-style head wiring. Many draft tables also put “head roll” on **physical_pin 6**, which **collides** with Lucy’s use of pins **5–6** for shoulder Y on `rp2040_torso_head`—treat the appendix as a **template**, then renumber every `physical_pin` to match the board you build.
+4. Set **`physical_pin`** to the PCA9685 channel (or equivalent) from your **actual** schematic. The appendix below uses **example** channels (jaw on **7**, cheeks **8-9**, and so on through **22**) typical of full InMoov-style head wiring. Many draft tables also put “head roll” on **physical_pin 6**, which **collides** with Lucy’s use of pins **5-6** for shoulder Y on `rp2040_torso_head`-treat the appendix as a **template**, then renumber every `physical_pin` to match the board you build.
 5. Tune **`servo_*_deg`**, **`offset_deg`**, **`direction`**, and **`scale`** on the bench once the joint exists in ros2_control.
 
-## Appendix — example YAML: i2-oriented head / expression actuators
+## Appendix - example YAML: i2-oriented head / expression actuators
 
 Paste the list items at the end of the top-level **`actuators:`** sequence in `active.yaml` (or merge a preset) once the URDF exposes matching joints and each **`physical_pin`** is verified on the PCA.
 
@@ -271,5 +271,5 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     enabled: false
 ```
 
-**Optional i1 head joints** not covered by the legacy expression block (add only if your URDF keeps them and you have servos): `i01.head.rothead_link_joint`, `i01.head.neck.001_link_joint`, `i01.head.eyeLeft_link_joint`, `i01.head.eyeRight_link_joint`, and the `*.001_link_joint` eye variants—each needs its own free **`physical_pin`** and next **`virtual_pin`**.
+**Optional i1 head joints** not covered by the legacy expression block (add only if your URDF keeps them and you have servos): `i01.head.rothead_link_joint`, `i01.head.neck.001_link_joint`, `i01.head.eyeLeft_link_joint`, `i01.head.eyeRight_link_joint`, and the `*.001_link_joint` eye variants-each needs its own free **`physical_pin`** and next **`virtual_pin`**.
 
