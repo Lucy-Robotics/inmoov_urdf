@@ -281,7 +281,7 @@ This restarts `robot_state_publisher` + `ros2_control` with the new URDF. **Cave
 
 `config/hardware/active.yaml` is the **single source of truth** for boards, actuators, sensors, and the URDF↔servo calibration (`offset_rad`, `direction`, `scale`). Angles are **radians** in YAML (degrees only at the LCP UI boundary). Modbus/SHM use milliradians. Schema and semantics: [hardware_mapping.md](hardware_mapping.md).
 
-`firmware.source_dir` is `lucy_embedded_firmware`; `board_class` selects the Rust crate (`internal_servo_only` / `internal_servo_i2c_pwm` → `rp2040_servo2040`, `bus_servo_only` → `rp2040_bus_servo`).
+`firmware.source_dir` is `lucy_embedded_firmware`; all Servo2040 `board_class` values (`internal_servo_only` / `internal_servo_i2c_pwm` / `bus_servo_only`) build `firmwares/rp2040_servo2040` (banks gated by YAML).
 
 Named presets under `config/hardware/configs/` are snapshots; `config/hardware/active_meta.yaml` records which preset is active and whether it was flashed.
 
