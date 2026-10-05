@@ -27,6 +27,7 @@ joint_state_broadcaster:
 
 left_arm_controller:
   ros__parameters:
+    # Position-only interfaces: interpolate from last command (no velocity state).
     interpolate_from_desired_state: true
     allow_nonzero_velocity_at_trajectory_end: false
     joints:
@@ -46,6 +47,7 @@ left_arm_controller:
 
 right_arm_controller:
   ros__parameters:
+    # Position-only interfaces: interpolate from last command (no velocity state).
     interpolate_from_desired_state: true
     allow_nonzero_velocity_at_trajectory_end: false
     joints:
@@ -65,6 +67,7 @@ right_arm_controller:
 
 torso_head_controller:
   ros__parameters:
+    # Position-only interfaces: interpolate from last command (no velocity state).
     interpolate_from_desired_state: true
     allow_nonzero_velocity_at_trajectory_end: false
     joints:

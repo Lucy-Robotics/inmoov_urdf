@@ -41,28 +41,28 @@ cameras:
     message_type: sensor_msgs/msg/CompressedImage
     external: true
     sim_gz_topic: /world/default/camera
-  - realsense-rgb: null
+  - id: realsense-rgb
     name: Realsense RGB
     topic: /realsense/realsense2_camera/color/image_raw
     compressed_topic: /realsense/realsense2_camera/color/image_raw/compressed
     message_type: sensor_msgs/msg/CompressedImage
     external: false
     link: i01.head.eyeLeft_link
-  - realsense-aligned-depth: null
+  - id: realsense-aligned-depth
     name: Realsense Aligned Depth
     topic: /realsense/realsense2_camera/aligned_depth_to_color/image_raw
     compressed_topic: /realsense/realsense2_camera/aligned_depth_to_color/image_raw/compressed
     message_type: sensor_msgs/msg/CompressedImage
     external: false
     link: i01.head.eyeLeft_link
-  - left_eye_camera: null
+  - id: left_eye_camera
     name: Left eye webcam
     topic: /camera/internal/left_eye/jpg
     compressed_topic: /camera/internal/left_eye/jpg/compressed
     message_type: sensor_msgs/msg/CompressedImage
     external: false
     link: i01.head.eyeRight_link
-  - right_eye_camera: null
+  - id: right_eye_camera
     name: Right eye webcam
     topic: /camera/internal/right_eye/jpg
     compressed_topic: /camera/internal/right_eye/jpg/compressed
@@ -74,6 +74,7 @@ firmware:
   build_dir: build/firmware
 controller_manager:
   update_rate: 100
+# One USB-CDC per board: slave_address is per serial port (default 1 is fine).
 boards:
   rp2040_left_arm:
     serial_id: E6617C93E3858429
@@ -498,7 +499,7 @@ actuators:
     offset_rad: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0.0174533
+    servo_min_rad: 0.0
     servo_max_rad: 3.14159
     servo_default_rad: 1.5708
     enabled: false
