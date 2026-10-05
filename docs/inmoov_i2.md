@@ -18,7 +18,7 @@ This document is the **bridge**: it explains that gap and gives a **copy-paste-o
 2. For each servo on **`rp2040_torso_head`**, append one list element to **`actuators:`** in `active.yaml` (or a preset under `configs/`).
 3. Assign **`virtual_pin`** as **contiguous integers per board**, starting after the last existing actuator on that board (today, shoulder Y uses `0` and `1` on `rp2040_torso_head`).
 4. Set **`physical_pin`** to the PCA9685 channel (or equivalent) from your **actual** schematic. The appendix below uses **example** channels (jaw on **7**, cheeks **8-9**, and so on through **22**) typical of full InMoov-style head wiring. Many draft tables also put “head roll” on **physical_pin 6**, which **collides** with Lucy’s use of pins **5-6** for shoulder Y on `rp2040_torso_head`-treat the appendix as a **template**, then renumber every `physical_pin` to match the board you build.
-5. Tune **`servo_*_deg`**, **`offset_deg`**, **`direction`**, and **`scale`** on the bench once the joint exists in ros2_control.
+5. Tune **`servo_*_rad`**, **`offset_rad`**, **`direction`**, and **`scale`** on the bench once the joint exists in ros2_control.
 
 ## Appendix - example YAML: i2-oriented head / expression actuators
 
@@ -38,12 +38,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 2
     physical_pin: 23
     servo_type: "270"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 270.0
-    servo_default_deg: 135.0
+    servo_min_rad: 0.0
+    servo_max_rad: 4.71239
+    servo_default_rad: 2.35619
     enabled: false
 
   - id: i2_jaw
@@ -52,12 +52,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 3
     physical_pin: 7
     servo_type: "300"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 150.0
-    servo_default_deg: 75.0
+    servo_min_rad: 0.0
+    servo_max_rad: 2.61799
+    servo_default_rad: 1.30900
     enabled: false
 
   - id: i2_left_cheek
@@ -66,12 +66,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 4
     physical_pin: 8
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_right_cheek
@@ -80,12 +80,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 5
     physical_pin: 9
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_upper_lip
@@ -94,12 +94,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 6
     physical_pin: 10
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_upper_left_eyelid
@@ -108,12 +108,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 7
     physical_pin: 11
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_upper_right_eyelid
@@ -122,12 +122,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 8
     physical_pin: 12
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_lower_left_eyelid
@@ -136,12 +136,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 9
     physical_pin: 13
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_lower_right_eyelid
@@ -150,12 +150,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 10
     physical_pin: 14
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_left_eye_horizontal
@@ -164,12 +164,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 11
     physical_pin: 15
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_left_eye_vertical
@@ -178,12 +178,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 12
     physical_pin: 16
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_right_eye_horizontal
@@ -192,12 +192,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 13
     physical_pin: 17
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_right_eye_vertical
@@ -206,12 +206,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 14
     physical_pin: 18
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_left_eyebrow
@@ -220,12 +220,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 15
     physical_pin: 19
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_right_eyebrow
@@ -234,12 +234,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 16
     physical_pin: 20
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_left_forehead
@@ -248,12 +248,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 17
     physical_pin: 21
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 
   - id: i2_right_forehead
@@ -262,12 +262,12 @@ Paste the list items at the end of the top-level **`actuators:`** sequence in `a
     virtual_pin: 18
     physical_pin: 22
     servo_type: "180"
-    offset_deg: 0.0
+    offset_rad: 0.0
     direction: 1
     scale: 1.0
-    servo_min_deg: 0.0
-    servo_max_deg: 180.0
-    servo_default_deg: 90.0
+    servo_min_rad: 0.0
+    servo_max_rad: 3.14159
+    servo_default_rad: 1.57080
     enabled: false
 ```
 
