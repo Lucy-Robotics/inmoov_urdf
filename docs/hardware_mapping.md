@@ -33,7 +33,7 @@ For **InMoov i1 vs i2** scope and how to extend the YAML with **head / expressio
 
 `servo_min_rad`, `servo_max_rad`, and `servo_default_rad` are **servo-frame radians**: the angle the motor actually sees, before any URDF visualization convention. They bound electrical/mechanical travel in firmware and in **LucySystemHardware** after the URDF→servo mapping.
 
-They are **not** the same as the LCP slider’s joint-space meaning unless `offset_rad = 0`, `direction = ±1`, and `scale = 1`. The control panel may **display** degrees at the UI boundary only; robot YAML, generator, HI, and firmware schemas use radians. Modbus/SHM wire encoding is **milliradians** (`rad × 1000`).
+They are **not** the same as the LCP slider’s joint-space meaning unless `offset_rad = 0`, `direction = ±1`, and `scale = 1`. The control panel may **display** degrees at the UI boundary only; robot YAML, generator, HI, and firmware schemas use radians. Modbus/SHM wire encoding is **pulse** (`u16`: PWM duty counts or STS3215 ticks); HI converts rad → pulse.
 
 Degree field names (`*_deg`) are **rejected** by schema validation.
 
