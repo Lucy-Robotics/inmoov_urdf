@@ -118,12 +118,12 @@ actuators:
     virtual_pin: 0
     physical_pin: 5
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_shoulder_y_torso
     urdf_joint: right_shoulder_y_link_joint
@@ -131,12 +131,12 @@ actuators:
     virtual_pin: 1
     physical_pin: 6
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_shoulder_z
     urdf_joint: left_shoulder_z_link_joint
@@ -144,12 +144,12 @@ actuators:
     virtual_pin: 0
     physical_pin: 10
     servo_type: '270'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: left_shoulder_x
     urdf_joint: left_shoulder_x_link_joint
@@ -157,12 +157,12 @@ actuators:
     virtual_pin: 1
     physical_pin: 11
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_elbow_x
     urdf_joint: left_elbow_x_link_joint
@@ -170,12 +170,12 @@ actuators:
     virtual_pin: 2
     physical_pin: 12
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_wrist_z
     urdf_joint: left_wrist_z_link_joint
@@ -183,12 +183,12 @@ actuators:
     virtual_pin: 3
     physical_pin: 13
     servo_type: '300'
-    offset_rad: 2.61799
+    offset: 2.61799
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 5.23599
-    servo_default_rad: 2.61799
+    limit_min: 0
+    limit_max: 5.23599
+    default: 2.61799
     enabled: false
   - id: left_thumb
     urdf_joint: i01.leftHand.thumb_link_joint
@@ -196,12 +196,12 @@ actuators:
     virtual_pin: 4
     physical_pin: 14
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_index
     urdf_joint: i01.leftHand.index_link_joint
@@ -209,12 +209,12 @@ actuators:
     virtual_pin: 5
     physical_pin: 15
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_majeure
     urdf_joint: i01.leftHand.majeure_link_joint
@@ -222,12 +222,12 @@ actuators:
     virtual_pin: 6
     physical_pin: 16
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_ring
     urdf_joint: i01.leftHand.ringFinger_link_joint
@@ -235,12 +235,12 @@ actuators:
     virtual_pin: 7
     physical_pin: 17
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: left_pinky
     urdf_joint: i01.leftHand.pinky_link_joint
@@ -248,12 +248,12 @@ actuators:
     virtual_pin: 8
     physical_pin: 18
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_shoulder_z
     urdf_joint: right_shoulder_z_link_joint
@@ -261,12 +261,12 @@ actuators:
     virtual_pin: 0
     physical_pin: 10
     servo_type: '270'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: -1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: right_shoulder_x
     urdf_joint: right_shoulder_x_link_joint
@@ -274,12 +274,12 @@ actuators:
     virtual_pin: 1
     physical_pin: 11
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_elbow_x
     urdf_joint: right_elbow_x_link_joint
@@ -287,12 +287,12 @@ actuators:
     virtual_pin: 2
     physical_pin: 12
     servo_type: '270'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_wrist_z
     urdf_joint: right_wrist_z_link_joint
@@ -300,12 +300,12 @@ actuators:
     virtual_pin: 3
     physical_pin: 13
     servo_type: '300'
-    offset_rad: 2.61799
+    offset: 2.61799
     direction: -1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 5.23599
-    servo_default_rad: 2.61799
+    limit_min: 0
+    limit_max: 5.23599
+    default: 2.61799
     enabled: false
   - id: right_thumb
     urdf_joint: i01.rightHand.thumb_link_joint
@@ -313,12 +313,12 @@ actuators:
     virtual_pin: 4
     physical_pin: 14
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_index
     urdf_joint: i01.rightHand.index_link_joint
@@ -326,12 +326,12 @@ actuators:
     virtual_pin: 5
     physical_pin: 15
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_majeure
     urdf_joint: i01.rightHand.majeure_link_joint
@@ -339,12 +339,12 @@ actuators:
     virtual_pin: 6
     physical_pin: 16
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_ring
     urdf_joint: i01.rightHand.ringFinger_link_joint
@@ -352,12 +352,12 @@ actuators:
     virtual_pin: 7
     physical_pin: 17
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: right_pinky
     urdf_joint: i01.rightHand.pinky_link_joint
@@ -365,12 +365,12 @@ actuators:
     virtual_pin: 8
     physical_pin: 18
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: torso_stom_mid
     urdf_joint: i01.torso.midStom_link_joint
@@ -378,12 +378,12 @@ actuators:
     virtual_pin: 2
     physical_pin: 7
     servo_type: '270'
-    offset_rad: 2.35619
+    offset: 2.35619
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 4.71239
-    servo_default_rad: 2.35619
+    limit_min: 0
+    limit_max: 4.71239
+    default: 2.35619
     enabled: false
   - id: torso_stom_top
     urdf_joint: i01.torso.topStom_link_joint
@@ -391,12 +391,12 @@ actuators:
     virtual_pin: 3
     physical_pin: 8
     servo_type: '270'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_rot
     urdf_joint: i01.head.rothead_link_joint
@@ -404,12 +404,12 @@ actuators:
     virtual_pin: 4
     physical_pin: 9
     servo_type: '270'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_neck_roll
     urdf_joint: i01.head.rollNeck_link_joint
@@ -417,12 +417,12 @@ actuators:
     virtual_pin: 5
     physical_pin: 10
     servo_type: '270'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_neck
     urdf_joint: i01.head.neck.001_link_joint
@@ -430,12 +430,12 @@ actuators:
     virtual_pin: 6
     physical_pin: 11
     servo_type: '300'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_jaw
     urdf_joint: i01.head.jaw_link_joint
@@ -443,12 +443,12 @@ actuators:
     virtual_pin: 7
     physical_pin: 12
     servo_type: '300'
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 0
+    limit_min: 0
+    limit_max: 3.14159
+    default: 0
     enabled: false
   - id: head_eye_right_y
     urdf_joint: i01.head.eyeRight_link_joint
@@ -456,12 +456,12 @@ actuators:
     virtual_pin: 8
     physical_pin: 13
     servo_type: '180'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_eye_right_x
     urdf_joint: i01.head.eyeRight.001_link_joint
@@ -469,12 +469,12 @@ actuators:
     virtual_pin: 9
     physical_pin: 14
     servo_type: '180'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_eye_left_y
     urdf_joint: i01.head.eyeLeft_link_joint
@@ -482,12 +482,12 @@ actuators:
     virtual_pin: 10
     physical_pin: 15
     servo_type: '180'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
   - id: head_eye_left_x
     urdf_joint: i01.head.eyeLeft.001_link_joint
@@ -495,12 +495,12 @@ actuators:
     virtual_pin: 11
     physical_pin: 16
     servo_type: '180'
-    offset_rad: 1.5708
+    offset: 1.5708
     direction: 1
     scale: 1
-    servo_min_rad: 0.0174533
-    servo_max_rad: 3.14159
-    servo_default_rad: 1.5708
+    limit_min: 0.0174533
+    limit_max: 3.14159
+    default: 1.5708
     enabled: false
 sensors:
   - id: left_thumb_pressure

@@ -20,11 +20,11 @@ actuators:
     virtual_pin: 0
     physical_pin: 10
     servo_type: "270"
-    offset_rad: 0
+    offset: 0
     direction: 1
     scale: 1.0
-    servo_min_rad: -0.0174533
-    servo_max_rad: 0.0174533
-    servo_default_rad: 0
+    limit_min: -0.0174533
+    limit_max: 0.0174533
+    default: 0
     enabled: false
 sensors: []
