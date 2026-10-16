@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-test:
-    uses: Sentience-Robotics/.github/.github/workflows/robot-package-ci.yaml@master
+    uses: Lucy-Robotics/.github/.github/workflows/robot-package-ci.yaml@master
     with:
       package_name: inmoov_urdf
     secrets: inherit
