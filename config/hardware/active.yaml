@@ -434,12 +434,12 @@ actuators:
     virtual_pin: 7
     physical_pin: 12
     servo_type: '300'
-    offset: 0
+    offset: 0.43633
     direction: 1
-    scale: 1
-    limit_min: 0
-    limit_max: 3.14159
-    default: 0
+    scale: 0.10526
+    limit_min: 0.43633
+    limit_max: 2.0944
+    default: 0.43633
     enabled: false
   - id: head_eye_right_y
     urdf_joint: i02_head_right_eye_vertical_joint
