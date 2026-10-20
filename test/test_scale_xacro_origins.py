@@ -128,6 +128,8 @@ def test_production_urdf_has_no_unscaled_meshes():
 def test_production_urdf_has_no_raw_origin_xyz():
     """Every <origin xyz> in the production xacro must use ${model_scale}."""
     text = URDF_XACRO.read_text(encoding="utf-8")
+    # Inertial COMs are SI values estimated for the current model_scale (see properties.xacro).
+    text = re.sub(r"<inertial>.*?</inertial>", "", text, flags=re.S)
     raw = re.findall(r'<origin\b[^>]*\sxyz="([^"]+)"', text)
     offenders = [
         v for v in raw

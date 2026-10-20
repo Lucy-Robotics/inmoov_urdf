@@ -14,7 +14,7 @@
         <param name="node_name">left_arm</param>
       </xacro:unless>
     </hardware>
-      <joint name="left_shoulder_z_link_joint">
+      <joint name="left_shoulder_z_joint">
           <param name="virtual_pin">0</param>
           <param name="servo_type">270</param>
           <param name="offset">1.5708</param>
@@ -25,12 +25,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.9163</param>
-            <param name="max">0.47124</param>
+            <param name="min">-0.872665</param>
+            <param name="max">0.610865</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="left_shoulder_x_link_joint">
+      <joint name="left_shoulder_x_joint">
           <param name="virtual_pin">1</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -41,12 +41,12 @@
           <param name="default">0</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">2.35619</param>
+            <param name="min">-0.349066</param>
+            <param name="max">2.356194</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="left_elbow_x_link_joint">
+      <joint name="left_elbow_x_joint">
           <param name="virtual_pin">2</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -58,11 +58,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.2</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="left_wrist_z_link_joint">
+      <joint name="left_wrist_z_joint">
           <param name="virtual_pin">3</param>
           <param name="servo_type">300</param>
           <param name="offset">2.61799</param>
@@ -73,12 +73,12 @@
           <param name="default">2.61799</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-1.570796</param>
+            <param name="max">1.570796</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.leftHand.thumb_link_joint">
+      <joint name="i02_leftHand_ThumbMid_joint">
           <param name="virtual_pin">4</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -90,11 +90,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.174</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.leftHand.index_link_joint">
+      <joint name="i02_leftHand_indexPhal_joint">
           <param name="virtual_pin">5</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -106,11 +106,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.302</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.leftHand.majeure_link_joint">
+      <joint name="i02_leftHand_majeurePhal_joint">
           <param name="virtual_pin">6</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -122,11 +122,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.26</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.leftHand.ringFinger_link_joint">
+      <joint name="i02_leftHand_ringFingerPhal_joint">
           <param name="virtual_pin">7</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -138,11 +138,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.373</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.leftHand.pinky_link_joint">
+      <joint name="i02_leftHand_pinkyPhal_joint">
           <param name="virtual_pin">8</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -154,7 +154,7 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.358</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -170,7 +170,7 @@
         <param name="node_name">right_arm</param>
       </xacro:unless>
     </hardware>
-      <joint name="right_shoulder_z_link_joint">
+      <joint name="right_shoulder_z_joint">
           <param name="virtual_pin">0</param>
           <param name="servo_type">270</param>
           <param name="offset">1.5708</param>
@@ -181,12 +181,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.42761</param>
-            <param name="max">0.83776</param>
+            <param name="min">-0.610865</param>
+            <param name="max">0.837758</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="right_shoulder_x_link_joint">
+      <joint name="right_shoulder_x_joint">
           <param name="virtual_pin">1</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -197,12 +197,12 @@
           <param name="default">0</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">2.35619</param>
+            <param name="min">-0.523599</param>
+            <param name="max">2.356194</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="right_elbow_x_link_joint">
+      <joint name="right_elbow_x_joint">
           <param name="virtual_pin">2</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -214,11 +214,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.2</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="right_wrist_z_link_joint">
+      <joint name="right_wrist_z_joint">
           <param name="virtual_pin">3</param>
           <param name="servo_type">300</param>
           <param name="offset">2.61799</param>
@@ -229,12 +229,12 @@
           <param name="default">2.61799</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-1.570796</param>
+            <param name="max">1.570796</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.rightHand.thumb_link_joint">
+      <joint name="i02_rightHand_ThumbMid_joint">
           <param name="virtual_pin">4</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -246,11 +246,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.149</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.rightHand.index_link_joint">
+      <joint name="i02_rightHand_indexPhal_joint">
           <param name="virtual_pin">5</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -262,11 +262,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.268</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.rightHand.majeure_link_joint">
+      <joint name="i02_rightHand_majeurePhal_joint">
           <param name="virtual_pin">6</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -278,11 +278,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.298</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.rightHand.ringFinger_link_joint">
+      <joint name="i02_rightHand_ringFingerPhal_joint">
           <param name="virtual_pin">7</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -294,11 +294,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.316</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.rightHand.pinky_link_joint">
+      <joint name="i02_rightHand_pinkyPhal_joint">
           <param name="virtual_pin">8</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -310,7 +310,7 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.298</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -326,7 +326,7 @@
         <param name="node_name">torso_head</param>
       </xacro:unless>
     </hardware>
-      <joint name="left_shoulder_y_link_joint">
+      <joint name="left_shoulder_y_joint">
           <param name="virtual_pin">0</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -338,11 +338,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.134464</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="right_shoulder_y_link_joint">
+      <joint name="right_shoulder_y_joint">
           <param name="virtual_pin">1</param>
           <param name="servo_type">270</param>
           <param name="offset">0</param>
@@ -354,11 +354,11 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">0.0</param>
-            <param name="max">1.5708</param>
+            <param name="max">1.22173</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.torso.midStom_link_joint">
+      <joint name="torso_z_joint">
           <param name="virtual_pin">2</param>
           <param name="servo_type">270</param>
           <param name="offset">2.35619</param>
@@ -369,12 +369,12 @@
           <param name="default">2.35619</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-0.523599</param>
+            <param name="max">0.523599</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.torso.topStom_link_joint">
+      <joint name="torso_y_joint">
           <param name="virtual_pin">3</param>
           <param name="servo_type">270</param>
           <param name="offset">1.5708</param>
@@ -385,12 +385,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.2618</param>
-            <param name="max">0.2618</param>
+            <param name="min">-0.261799</param>
+            <param name="max">0.261799</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.rothead_link_joint">
+      <joint name="i01_head_rothead_joint">
           <param name="virtual_pin">4</param>
           <param name="servo_type">270</param>
           <param name="offset">1.5708</param>
@@ -401,12 +401,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-1.047198</param>
+            <param name="max">0.872665</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.rollNeck_link_joint">
+      <joint name="neck_joint">
           <param name="virtual_pin">5</param>
           <param name="servo_type">270</param>
           <param name="offset">1.5708</param>
@@ -417,12 +417,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="min">-0.349066</param>
+            <param name="max">0.349066</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.neck.001_link_joint">
+      <joint name="i01_head_neck_001_joint">
           <param name="virtual_pin">6</param>
           <param name="servo_type">300</param>
           <param name="offset">1.5708</param>
@@ -433,12 +433,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="min">-0.349066</param>
+            <param name="max">0.349066</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.jaw_link_joint">
+      <joint name="i02_head_jaw_joint">
           <param name="virtual_pin">7</param>
           <param name="servo_type">300</param>
           <param name="offset">0</param>
@@ -454,7 +454,7 @@
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.eyeRight_link_joint">
+      <joint name="i02_head_right_eye_vertical_joint">
           <param name="virtual_pin">8</param>
           <param name="servo_type">180</param>
           <param name="offset">1.5708</param>
@@ -465,12 +465,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.7853</param>
-            <param name="max">0.7853</param>
+            <param name="min">-0.261799</param>
+            <param name="max">0.261799</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.eyeRight.001_link_joint">
+      <joint name="i02_head_right_eye_horizontal_joint">
           <param name="virtual_pin">9</param>
           <param name="servo_type">180</param>
           <param name="offset">1.5708</param>
@@ -481,12 +481,12 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="min">-0.174533</param>
+            <param name="max">0.174533</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.eyeLeft_link_joint">
+      <joint name="i02_head_left_eye_vertical_joint">
           <param name="virtual_pin">10</param>
           <param name="servo_type">180</param>
           <param name="offset">1.5708</param>
@@ -497,24 +497,24 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.7853</param>
-            <param name="max">0.7853</param>
+            <param name="min">-0.349066</param>
+            <param name="max">0.174533</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
-      <joint name="i01.head.eyeLeft.001_link_joint">
+      <joint name="i02_head_left_eye_horizontal_joint">
           <param name="virtual_pin">11</param>
           <param name="servo_type">180</param>
           <param name="offset">1.5708</param>
           <param name="direction">1</param>
           <param name="scale">1</param>
-          <param name="limit_min">0</param>
+          <param name="limit_min">0.0</param>
           <param name="limit_max">3.14159</param>
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="min">-0.174533</param>
+            <param name="max">0.174533</param>
           </command_interface>
           <state_interface name="position" />
       </joint>

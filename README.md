@@ -1,6 +1,6 @@
 # inmoov_urdf
 
-ROS 2 **Jazzy** (Ubuntu 24.04) package with the **InMoov-derived** robot description used by Lucy: **URDF/xacro**, **DAE meshes**, **ros2_control** blocks, **Gazebo (gz-sim) physics**, an **RViz** layout, and **launch files** for ros2_control + RViz / Gazebo.
+ROS 2 **Jazzy** (Ubuntu 24.04) package with the **InMoov-derived** robot description used by Lucy: **URDF/xacro**, **OBJ/STL meshes** (InMoov i2 model), **ros2_control** blocks, **Gazebo (gz-sim) physics**, an **RViz** layout, and **launch files** for ros2_control + RViz / Gazebo.
 
 The web control panel (rosbridge + `/config/*` services) is **not** started from here — use `lucy_bringup` (`lucy.launch.py`) or `web_ros_api.launch.py` from `lucy_ros_packages`.
 
@@ -32,7 +32,7 @@ inmoov_urdf/
 │   ├── robot_description/
 │   │   ├── urdf/properties.xacro                 # model_scale
 │   │   ├── urdf/robot_description.urdf.xacro     # links, joints, visuals, collisions, materials
-│   │   └── meshes/dae/*.dae                      # 290 Collada meshes (visual + collision)
+│   │   └── meshes/*.obj, *.stl                     # i2 visual OBJ + collision STL meshes (CC BY-NC, see LICENSE-ASSETS.md)
 │   ├── ros2_control/
 │   │   └── inmoov_ros2_control.xacro             # hardware interfaces (real / mock)
 │   └── gazebo/
@@ -114,13 +114,13 @@ Tools that cannot consume xacro (Isaac Sim, offline MoveIt pipelines, the LCP ex
 ros2 run xacro xacro description/urdf/inmoov.urdf.xacro \
     base_path:=$(pwd)/description \
     use_gazebo_sim:=false \
-  | sed 's|file://[^ "]*meshes/dae/\([^"]*\)|meshes/dae/\1|g' \
+  | sed 's|file://[^ "]*meshes/\([^"]*\)|meshes/\1|g' \
   > /tmp/robot_description.urdf
 ```
 
 | Argument | Default | Purpose |
 |----------|---------|---------|
-| `base_path` | `.` | Parent of `robot_description/`; the xacro appends `/robot_description/meshes/dae`. |
+| `base_path` | `.` | Parent of `robot_description/`; the xacro appends `/robot_description/meshes`. |
 | `use_gazebo_sim` | `false` | `true` enables `gz_ros2_control` plugin + Gazebo physics overrides. |
 | `use_mock_hardware` | `false` | `true` keeps `LucySystemHardware` but disables the micro-ROS actuator publisher (URDF clamping still runs). |
 
@@ -155,7 +155,7 @@ CI: `.github/workflows/ci.yml` builds `inmoov_urdf` + `lucy_ros2_control`, runs 
 | This file | Package scope, build, launches, integration points |
 | [**`docs/DEVELOPER.md`**](docs/DEVELOPER.md) | **Editing the URDF**, calibration workflow (collisions + joint limits), xacro architecture, scripts, extension checklist |
 | [`docs/hardware_mapping.md`](docs/hardware_mapping.md) | Schema for `config/hardware/active.yaml` (boards, actuators, calibration fields) |
-| [`docs/inmoov_i2.md`](docs/inmoov_i2.md) | i1 (current) vs i2 head/expression actuators — YAML appendix |
+| [`docs/inmoov_i2.md`](docs/inmoov_i2.md) | i2 model source and head/expression actuators — YAML appendix |
 | `lucy_ros_packages` README | Lucy system bringup, hardware plugin, cameras, web panel |
 | `lucy_ws/docs/simulation_and_visualization.md` | Control panel ↔ ROS pipeline and sim-time notes |
 
