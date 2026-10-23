@@ -319,12 +319,12 @@
     <joint name="i02_head_jaw_joint">
       <param name="virtual_pin">7</param>
       <param name="servo_type">300</param>
-      <param name="offset">0</param>
+      <param name="offset">0.43633</param>
       <param name="direction">1</param>
-      <param name="scale">1</param>
-      <param name="limit_min">0</param>
-      <param name="limit_max">3.14159</param>
-      <param name="default">0</param>
+      <param name="scale">0.10526</param>
+      <param name="limit_min">0.43633</param>
+      <param name="limit_max">2.0944</param>
+      <param name="default">0.43633</param>
       <command_interface name="position" />
       <state_interface name="position" />
     </joint>
@@ -384,7 +384,6 @@
       <always_on>true</always_on>
       <update_rate>30.0</update_rate>
       <visualize>true</visualize>
-      <!-- gz publishes raw frames here; gazebo.launch.py republishes raw->compressed onto /realsense/realsense2_camera/color/image_raw for the LCP. -->
       <topic>/realsense/realsense2_camera/color/image_raw</topic>
       <camera name="camera">
         <horizontal_fov>1.047</horizontal_fov>
@@ -405,7 +404,6 @@
       <always_on>true</always_on>
       <update_rate>30.0</update_rate>
       <visualize>true</visualize>
-      <!-- gz publishes raw frames here; gazebo.launch.py republishes raw->compressed onto /realsense/realsense2_camera/aligned_depth_to_color/image_raw for the LCP. -->
       <topic>/realsense/realsense2_camera/aligned_depth_to_color/image_raw</topic>
       <camera name="camera">
         <horizontal_fov>1.047</horizontal_fov>
@@ -426,7 +424,6 @@
       <always_on>true</always_on>
       <update_rate>30.0</update_rate>
       <visualize>true</visualize>
-      <!-- gz publishes raw frames here; gazebo.launch.py republishes raw->compressed onto /camera/internal/left_eye/jpg for the LCP. -->
       <topic>/camera/internal/left_eye/jpg</topic>
       <camera name="camera">
         <horizontal_fov>1.047</horizontal_fov>
@@ -447,7 +444,6 @@
       <always_on>true</always_on>
       <update_rate>30.0</update_rate>
       <visualize>true</visualize>
-      <!-- gz publishes raw frames here; gazebo.launch.py republishes raw->compressed onto /camera/internal/right_eye/jpg for the LCP. -->
       <topic>/camera/internal/right_eye/jpg</topic>
       <camera name="camera">
         <horizontal_fov>1.047</horizontal_fov>
