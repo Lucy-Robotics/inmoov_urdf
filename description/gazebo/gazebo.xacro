@@ -370,7 +370,7 @@
       <param name="offset">1.5708</param>
       <param name="direction">1</param>
       <param name="scale">1</param>
-      <param name="limit_min">0.0</param>
+      <param name="limit_min">0</param>
       <param name="limit_max">3.14159</param>
       <param name="default">1.5708</param>
       <command_interface name="position" />
