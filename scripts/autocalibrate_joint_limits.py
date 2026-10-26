@@ -22,6 +22,12 @@ For each actuated joint listed in config/hardware/active.yaml:
 - Step the joint downward similarly.
 - Record the first-contact angle minus a safety margin.
 
+Angles are radians throughout: CLI flags, the sweep, the printed table, and
+the comment written next to each ``<limit>``. That matches URDF ``<limit>``
+and ``config/hardware/active.yaml`` (``offset``, ``limit_min``, ``limit_max``,
+``default``). Defaults are a 0.00873 rad step, a 0.08727 rad margin, and a
+±pi search range.
+
 What this CAN do
 - Find the kinematic envelope of self-collision (chassis interference) for
   each joint independently from the chosen neutral pose.
@@ -33,7 +39,7 @@ What this CANNOT do
   limit). Those need a real-world measurement or datasheet.
 - Find the joint-space-wide reachable set (one-axis-at-a-time sweeps).
 - Distinguish "barely touching mesh" from "real interference" — the bullet
-  contact threshold is conservative; the script applies a 5° margin.
+  contact threshold is conservative; the script applies a 0.08727 rad margin.
 
 Usage
 -----
@@ -41,7 +47,7 @@ Usage
     # host-side: pip install --user -r scripts/requirements.txt
     python3 scripts/autocalibrate_joint_limits.py                  # headless dry run
     python3 scripts/autocalibrate_joint_limits.py --apply          # write back
-    python3 scripts/autocalibrate_joint_limits.py --step-deg 0.25 --margin-deg 3
+    python3 scripts/autocalibrate_joint_limits.py --step-rad 0.00436 --margin-rad 0.05236
 
 Live visualization
 ------------------
@@ -80,6 +86,11 @@ CONTROLLERS_YAML = ROOT / "config/controllers.yaml"
 ACTIVE_YAML = ROOT / "config/hardware/active.yaml"
 TARGET_XACRO = ROOT / "description/robot_description/urdf/robot_description.urdf.xacro"
 
+# Same physical sweep as the old --step-deg 0.5 / --margin-deg 5 / --max-sweep-deg 180.
+DEFAULT_STEP_RAD = math.radians(0.5)
+DEFAULT_MARGIN_RAD = math.radians(5.0)
+DEFAULT_MAX_SWEEP_RAD = math.pi
+
 
 @dataclass
 class JointResult:
@@ -88,6 +99,8 @@ class JointResult:
     upper_rad: float
     hit_lower: bool
     hit_upper: bool
+    urdf_lower_rad: float
+    urdf_upper_rad: float
 
 
 def expand_urdf() -> str:
@@ -232,9 +245,9 @@ def _make_visualizer(view: str, rate_hz: float) -> Visualizer:
 def sweep(
     urdf_text: str,
     joint_names: list[str],
-    step_deg: float,
-    margin_deg: float,
-    max_sweep_deg: float,
+    step_rad: float,
+    margin_rad: float,
+    max_sweep_rad: float,
     visualizer: Optional[Visualizer] = None,
     penetration_mm: float = 1.0,
     log_baseline: bool = False,
@@ -319,9 +332,6 @@ def sweep(
     def has_new_collision() -> bool:
         return bool(contact_pairs() - baseline)
 
-    step_rad = math.radians(step_deg)
-    max_sweep_rad = math.radians(max_sweep_deg)
-    margin_rad = math.radians(margin_deg)
     results: list[JointResult] = []
 
     try:
@@ -332,7 +342,7 @@ def sweep(
             j_idx = name_to_idx[name]
             info = p.getJointInfo(body, j_idx, physicsClientId=cid)
             urdf_lower, urdf_upper = info[8], info[9]
-            if urdf_lower >= urdf_upper:  # continuous joint, fall back to ±180°
+            if urdf_lower >= urdf_upper:  # continuous joint, fall back to ±pi
                 urdf_lower, urdf_upper = -math.pi, math.pi
 
             reset_neutral()
@@ -342,7 +352,15 @@ def sweep(
             if has_new_collision():
                 print(f"[warn] {name}: new contact at neutral after reset; skipping")
                 results.append(
-                    JointResult(name, urdf_lower, urdf_upper, hit_lower=False, hit_upper=False)
+                    JointResult(
+                        name,
+                        urdf_lower,
+                        urdf_upper,
+                        hit_lower=False,
+                        hit_upper=False,
+                        urdf_lower_rad=urdf_lower,
+                        urdf_upper_rad=urdf_upper,
+                    )
                 )
                 continue
 
@@ -371,7 +389,17 @@ def sweep(
                 angle -= step_rad
             reset_neutral()
 
-            results.append(JointResult(name, lower_hit, upper_hit, hit_l, hit_u))
+            results.append(
+                JointResult(
+                    name,
+                    lower_hit,
+                    upper_hit,
+                    hit_l,
+                    hit_u,
+                    urdf_lower_rad=urdf_lower,
+                    urdf_upper_rad=urdf_upper,
+                )
+            )
     finally:
         viz.teardown()
         p.disconnect(cid)
@@ -398,10 +426,8 @@ def apply_to_xacro(results: list[JointResult]) -> None:
         if name not in by_name:
             return m.group(0)
         r = by_name[name]
-        deg_lo = math.degrees(r.lower_rad)
-        deg_hi = math.degrees(r.upper_rad)
         comment = (
-            f"<!-- autocalibrated: {deg_lo:.1f} deg .. {deg_hi:.1f} deg "
+            f"<!-- autocalibrated: {r.lower_rad:.5f} rad .. {r.upper_rad:.5f} rad "
             f"(hit_lower={r.hit_lower}, hit_upper={r.hit_upper}) -->"
         )
         return (
@@ -415,9 +441,24 @@ def apply_to_xacro(results: list[JointResult]) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--step-deg", type=float, default=0.5)
-    ap.add_argument("--margin-deg", type=float, default=5.0)
-    ap.add_argument("--max-sweep-deg", type=float, default=180.0)
+    ap.add_argument(
+        "--step-rad",
+        type=float,
+        default=DEFAULT_STEP_RAD,
+        help="Sweep increment in radians (default %(default).5f).",
+    )
+    ap.add_argument(
+        "--margin-rad",
+        type=float,
+        default=DEFAULT_MARGIN_RAD,
+        help="Back off from first contact by this many radians (default %(default).5f).",
+    )
+    ap.add_argument(
+        "--max-sweep-rad",
+        type=float,
+        default=DEFAULT_MAX_SWEEP_RAD,
+        help="Furthest angle from zero to search, in radians (default %(default).5f).",
+    )
     ap.add_argument("--apply", action="store_true", help="Write results back into the xacro")
     ap.add_argument(
         "--view",
@@ -474,29 +515,39 @@ def main() -> int:
     viz = _make_visualizer(args.view, rate_hz)
     print(
         f"Sweeping {len(joints)} actuated joints "
-        f"(step={args.step_deg}°, view={args.view}, rate_hz={rate_hz or 'unbounded'})..."
+        f"(step={args.step_rad:.5f} rad, view={args.view}, "
+        f"rate_hz={rate_hz or 'unbounded'})..."
     )
     results = sweep(
         urdf_text,
         joints,
-        step_deg=args.step_deg,
-        margin_deg=args.margin_deg,
-        max_sweep_deg=args.max_sweep_deg,
+        step_rad=args.step_rad,
+        margin_rad=args.margin_rad,
+        max_sweep_rad=args.max_sweep_rad,
         visualizer=viz,
         penetration_mm=args.penetration_mm,
         log_baseline=args.log_baseline,
     )
-    print(f"\n{'joint':40s}  {'lower deg':>10s}  {'upper deg':>10s}  hit")
-    print("-" * 80)
+    tol = args.step_rad * 0.5
+    print(
+        f"\n{'joint':40s}  {'lower rad':>10s}  {'upper rad':>10s}  "
+        f"{'vs urdf':>12s}  hit"
+    )
+    print("-" * 92)
     for r in results:
         marker = (
             "<-> ok"
             if r.hit_lower and r.hit_upper
             else ("> upper" if r.hit_upper else ("< lower" if r.hit_lower else "free"))
         )
+        changed = (
+            abs(r.lower_rad - r.urdf_lower_rad) > tol
+            or abs(r.upper_rad - r.urdf_upper_rad) > tol
+        )
+        versus = "tighter" if changed else "matches"
         print(
-            f"{r.name:40s}  {math.degrees(r.lower_rad):10.2f}  "
-            f"{math.degrees(r.upper_rad):10.2f}  {marker}"
+            f"{r.name:40s}  {r.lower_rad:10.5f}  {r.upper_rad:10.5f}  "
+            f"{versus:>12s}  {marker}"
         )
     if args.apply:
         apply_to_xacro(results)
