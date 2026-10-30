@@ -8,7 +8,7 @@ You can simulate sensors by using mock_sensor::MockSensorSystem
 
 Declare the plugin with filename and FQN of the class
 ```xml
-<plugin filename="libmock_sensor.so" name="mock_sensor::MockSensorSystem">
+<plugin filename="mock_sensor" name="mock_sensor::MockSensorSystem">
 ```
 
 ### Tags
