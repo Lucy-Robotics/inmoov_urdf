@@ -1,6 +1,6 @@
 # Developer guide — `inmoov_urdf`
 
-ROS 2 **Jazzy** (Ubuntu 24.04). For contributors who change URDF/xacro, meshes, RViz config, hardware YAML, or launch files. Bringup, hardware plugin, and cameras live in **`lucy_ros_packages`** ([Sentience-Robotics/lucy_ros_packages](https://github.com/Sentience-Robotics/lucy_ros_packages) → `docs/DEVELOPER.md`).
+ROS 2 **Jazzy** (Ubuntu 24.04). For contributors who change URDF/xacro, meshes, RViz config, hardware YAML, or launch files. Bringup, hardware plugin, and cameras live in **`lucy_ros_packages`** ([Lucy-Robotics/lucy_ros_packages](https://github.com/Lucy-Robotics/lucy_ros_packages) → `docs/DEVELOPER.md`).
 
 ---
 
