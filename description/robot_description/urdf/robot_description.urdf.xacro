@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="inmoov" version="1.0">
-  <!-- mesh_dir and use_gazebo_sim set by parent (inmoov.urdf.xacro) -->
+  <!-- mesh_dir set by parent (inmoov.urdf.xacro) -->
   <material name="white">
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
@@ -507,14 +507,8 @@
       <geometry><box size="${model_scale * 0.01} ${model_scale * 0.01} ${model_scale * 0.01}"/></geometry>
     </collision>
     <inertial>
-      <xacro:if value="${use_gazebo_sim}">
-        <mass value="10000"/>
-        <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100"/>
-      </xacro:if>
-      <xacro:unless value="${use_gazebo_sim}">
-        <mass value="0.001"/>
-        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-      </xacro:unless>
+      <mass value="0.001"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
   </link>
   <link name="stand_link">
@@ -529,14 +523,8 @@
       <geometry><box size="${model_scale * 0.01} ${model_scale * 0.01} ${model_scale * 0.01}"/></geometry>
     </collision>
     <inertial>
-      <xacro:if value="${use_gazebo_sim}">
-        <mass value="10000"/>
-        <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100"/>
-      </xacro:if>
-      <xacro:unless value="${use_gazebo_sim}">
-        <mass value="0.001"/>
-        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
-      </xacro:unless>
+      <mass value="0.001"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
     </inertial>
   </link>
   <link name="i01.head.eyeRight.001_link">
