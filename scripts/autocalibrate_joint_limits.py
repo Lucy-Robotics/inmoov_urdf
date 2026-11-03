@@ -426,6 +426,9 @@ def apply_to_xacro(results: list[JointResult]) -> None:
         if name not in by_name:
             return m.group(0)
         r = by_name[name]
+        if r.upper_rad <= r.lower_rad:
+            print(f"[keep] {name}: no free range found, limit unchanged")
+            return m.group(0)
         comment = (
             f"<!-- autocalibrated: {r.lower_rad:.5f} rad .. {r.upper_rad:.5f} rad "
             f"(hit_lower={r.hit_lower}, hit_upper={r.hit_upper}) -->"
