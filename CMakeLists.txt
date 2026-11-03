@@ -3,7 +3,10 @@ project(inmoov_urdf)
 
 find_package(ament_cmake REQUIRED)
 
-add_subdirectory(plugins)
+find_package(gz-sim8 QUIET)
+if(gz-sim8_FOUND)
+  add_subdirectory(plugins)
+endif()
 
 install(
   DIRECTORY launch config description docs worlds
