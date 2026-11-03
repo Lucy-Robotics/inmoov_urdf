@@ -380,7 +380,7 @@
     <mimic joint="i01.rightHand.pinky_link_joint" multiplier="${finger_mid_ratio}" offset="0.0"/>
   </joint>
   <joint name="i01.head.rollNeck_link_joint" type="revolute">
-    <limit lower="0.00000" upper="0.00000" effort="100.00000" velocity="0.78540"/><!-- autocalibrated: 0.00000 rad .. 0.00000 rad (hit_lower=True, hit_upper=True) -->
+    <limit lower="-0.34907" upper="0.34907" effort="100.00000" velocity="0.78540"/><!-- hand-set: -0.34907 rad .. 0.34907 rad -->
     <dynamics damping="0.7" friction="0.5"/>
     <origin rpy="-0.00000 0.00000 -0.00000" xyz="${model_scale * 0.00000} ${model_scale * -0.00000} ${model_scale * 0.00435}"/>
     <parent link="i01.head.neck.001_link"/>
