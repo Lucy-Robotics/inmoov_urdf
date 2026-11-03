@@ -369,8 +369,8 @@
           <param name="default">2.35619</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-0.50615</param>
+            <param name="max">0.50615</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -385,8 +385,8 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.2618</param>
-            <param name="max">0.2618</param>
+            <param name="min">-0.12217</param>
+            <param name="max">0.12217</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -401,8 +401,8 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-1.5708</param>
-            <param name="max">1.5708</param>
+            <param name="min">-0.20071</param>
+            <param name="max">0.14835</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -417,8 +417,8 @@
           <param name="default">1.5708</param>
           <command_interface name="torque_enable"/>
           <command_interface name="position">
-            <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="min">0.0</param>
+            <param name="max">0.0</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
@@ -434,7 +434,7 @@
           <command_interface name="torque_enable"/>
           <command_interface name="position">
             <param name="min">-0.34907</param>
-            <param name="max">0.34907</param>
+            <param name="max">0.0</param>
           </command_interface>
           <state_interface name="position" />
       </joint>
