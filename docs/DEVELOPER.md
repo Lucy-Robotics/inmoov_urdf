@@ -154,7 +154,7 @@ Practical consequences:
 
 ### 6.5 Joint limits
 
-Limits are per-joint, in radians, on the `<limit lower="…" upper="…"/>` of each actuated joint in `robot_description.urdf.xacro`. They are **decoupled** from `config/hardware/active.yaml`: the hardware mapping handles servo↔URDF conversion (`offset_deg`, `direction`, `scale` — see [hardware_mapping.md](hardware_mapping.md)).
+Limits are per-joint, in radians, on the `<limit lower="…" upper="…"/>` of each actuated joint in `robot_description.urdf.xacro`. They are **decoupled** from `config/hardware/active.yaml`: the hardware mapping handles servo↔URDF conversion (`offset`, `direction`, `scale` — see [hardware_mapping.md](hardware_mapping.md)). Actuator `limit_min`, `limit_max`, `default`, and `offset` are radians too.
 
 `lucy_config_generator` copies the `<limit lower upper>` of every actuated joint into the `<command_interface name="position">` block of the regenerated `inmoov_ros2_control.xacro` as `<param name="min/max"/>` (radians). At runtime, `LucySystemHardware` clamps `hw_commands_` to that envelope before the actuator mapping. Stock `gz_ros2_control` does **not** apply this clamp; rely on URDF `<limit>` enforcement coming from the spawned model when running in Gazebo.
 
@@ -192,7 +192,7 @@ Workflow:
 
 1. Power off the motors, back-drive the real joint to each mechanical extreme.
 2. Read off the URDF angle (mind the joint-axis sign).
-3. Edit the matching `<limit lower="…" upper="…"/>` in `robot_description.urdf.xacro`. Add a trailing `<!-- = X deg .. Y deg -->` comment for readability.
+3. Edit the matching `<limit lower="…" upper="…"/>` in `robot_description.urdf.xacro`. Add a trailing `<!-- = X rad .. Y rad -->` comment for readability. Angles are radians, same as the `<limit>` values and `config/hardware/active.yaml`.
 4. Reload:
    ```bash
    # Quick slider preview
@@ -203,7 +203,7 @@ Workflow:
 
 ### 7.3 Joint limits — auto-cal (collision-bound envelope)
 
-`scripts/autocalibrate_joint_limits.py` expands xacro, loads the URDF in PyBullet (`URDF_USE_SELF_COLLISION | EXCLUDE_PARENT`), holds every joint at zero, sweeps each actuated joint up and down in fixed-degree increments, and records the first self-collision angle minus a safety margin (default 5°). It streams `/joint_states` so you watch the sweep live in your existing RViz layout.
+`scripts/autocalibrate_joint_limits.py` expands xacro, loads the URDF in PyBullet (`URDF_USE_SELF_COLLISION | EXCLUDE_PARENT`), holds every joint at zero, sweeps each actuated joint up and down in fixed radian increments, and records the first self-collision angle minus a safety margin (default `0.08727` rad). Flags, the printed table, and the `<!-- autocalibrated: … rad -->` comment are all radians. It streams `/joint_states` so you watch the sweep live in your existing RViz layout. A dry run prints `matches` when the sweep stays on the current `<limit>`, and `tighter` when a new contact pulls a bound in.
 
 ```bash
 # Terminal 1 — RViz only (no slider GUI fighting the publisher)
@@ -225,7 +225,7 @@ Flags:
 - `--view {gui,rviz}` — PyBullet native window vs `/joint_states` publisher.
 - `--rate-hz` — `/joint_states` publish rate (RViz only).
 - `--joint <urdf_joint>` — repeatable, isolates one axis (everything else held at zero).
-- `--step-deg`, `--margin-deg` — sweep granularity / safety margin.
+- `--step-rad`, `--margin-rad`, `--max-sweep-rad` — sweep increment, safety margin, and search range, all in radians. Defaults are `0.00873`, `0.08727`, and `π`.
 - `--apply` — write the limits back to `robot_description.urdf.xacro`.
 
 PyBullet ships in the `lucy_ros2:jazzy` image via `Dockerfile.jazzy`; for host-side runs, see `scripts/requirements.txt`.
@@ -273,7 +273,7 @@ This restarts `robot_state_publisher` + `ros2_control` with the new URDF. **Cave
 
 ## 9. Hardware mapping (pointer)
 
-`config/hardware/active.yaml` is the **single source of truth** for boards, actuators, sensors, and the URDF↔servo calibration (`offset_deg`, `direction`, `scale`). The schema, semantics, and validation rules live in [hardware_mapping.md](hardware_mapping.md). The control panel and `lucy_config_generator` write here; never hand-edit during a running pipeline.
+`config/hardware/active.yaml` is the **single source of truth** for boards, actuators, sensors, and the URDF↔servo calibration (`offset`, `direction`, `scale`, all in radians). The schema, semantics, and validation rules live in [hardware_mapping.md](hardware_mapping.md). The control panel and `lucy_config_generator` write here; never hand-edit during a running pipeline.
 
 Named presets under `config/hardware/configs/` are snapshots; `config/hardware/active_meta.yaml` records which preset is active and whether it was flashed.
 
