@@ -27,9 +27,6 @@
     <child link="base_node"/>
     <origin xyz="0 0 0.02" rpy="0 0 0"/>
   </joint>
-  <gazebo reference="stand_link">
-    <static>true</static>
-  </gazebo>
 
   <!-- Body links: full-mesh collisions with self-collision disabled. Adjacent
        shoulder/elbow meshes overlap at neutral pose; enabling self-collide
