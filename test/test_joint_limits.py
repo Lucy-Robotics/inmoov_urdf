@@ -86,3 +86,21 @@ def test_model_scale_property_resolves(urdf_root):
     """Xacro should fully expand model_scale (no leftover ${...} tokens)."""
     text = ET.tostring(urdf_root, encoding="unicode")
     assert "${model_scale" not in text, "model_scale property left unevaluated"
+
+
+def test_servo_limits_stay_within_urdf_joint_limits(urdf_root):
+    _, _, _, active = _paths()
+    urdf_limits = {
+        joint.get("name"): (float(joint.find("limit").get("lower")), float(joint.find("limit").get("upper")))
+        for joint in urdf_root.findall("joint")
+        if joint.find("limit") is not None
+    }
+    too_wide = []
+    for a in yaml.safe_load(active.read_text(encoding="utf-8"))["actuators"]:
+        lower, upper = urdf_limits[a["urdf_joint"]]
+        travel = sorted(
+            (servo - a["offset"]) * a["direction"] * a["scale"] for servo in (a["limit_min"], a["limit_max"])
+        )
+        if travel[0] < lower - 1e-3 or travel[1] > upper + 1e-3:
+            too_wide.append(f"{a['id']}: joint travel {travel} outside URDF [{lower}, {upper}]")
+    assert not too_wide, "\n".join(too_wide)
