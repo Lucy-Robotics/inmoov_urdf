@@ -125,7 +125,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_shoulder_y_torso
@@ -138,7 +138,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_shoulder_z
@@ -150,8 +150,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 0.6545
+    limit_max: 2.04204
     default: 1.5708
     enabled: false
   - id: left_shoulder_x
@@ -164,7 +164,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 2.35619
     default: 0
     enabled: false
   - id: left_elbow_x
@@ -177,7 +177,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_wrist_z
@@ -189,8 +189,8 @@ actuators:
     offset: 2.61799
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 5.23599
+    limit_min: 1.04719
+    limit_max: 4.18879
     default: 2.61799
     enabled: false
   - id: left_thumb
@@ -203,7 +203,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_index
@@ -216,7 +216,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_majeure
@@ -229,7 +229,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_ring
@@ -242,7 +242,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: left_pinky
@@ -255,7 +255,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_shoulder_z
@@ -267,8 +267,8 @@ actuators:
     offset: 1.5708
     direction: -1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 0.73304
+    limit_max: 1.99841
     default: 1.5708
     enabled: false
   - id: right_shoulder_x
@@ -281,7 +281,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 2.35619
     default: 0
     enabled: false
   - id: right_elbow_x
@@ -294,7 +294,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_wrist_z
@@ -306,8 +306,8 @@ actuators:
     offset: 2.61799
     direction: -1
     scale: 1
-    limit_min: 0
-    limit_max: 5.23599
+    limit_min: 1.04719
+    limit_max: 4.18879
     default: 2.61799
     enabled: false
   - id: right_thumb
@@ -320,7 +320,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_index
@@ -333,7 +333,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_majeure
@@ -346,7 +346,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_ring
@@ -359,7 +359,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: right_pinky
@@ -372,7 +372,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 1.5708
     default: 0
     enabled: false
   - id: torso_stom_mid
@@ -384,8 +384,8 @@ actuators:
     offset: 2.35619
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 4.71239
+    limit_min: 0.78539
+    limit_max: 3.92699
     default: 2.35619
     enabled: false
   - id: torso_stom_top
@@ -397,8 +397,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 1.309
+    limit_max: 1.8326
     default: 1.5708
     enabled: false
   - id: head_rot
@@ -423,8 +423,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 1.22173
+    limit_max: 1.91987
     default: 1.5708
     enabled: false
   - id: head_neck
@@ -436,8 +436,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 1.22173
+    limit_max: 1.91987
     default: 1.5708
     enabled: false
   - id: head_jaw
@@ -450,7 +450,7 @@ actuators:
     direction: 1
     scale: 1
     limit_min: 0
-    limit_max: 3.14159
+    limit_max: 0.17453
     default: 0
     enabled: false
   - id: head_eye_right_y
@@ -462,8 +462,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 0.7855
+    limit_max: 2.3561
     default: 1.5708
     enabled: false
   - id: head_eye_right_x
@@ -475,8 +475,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 1.22173
+    limit_max: 1.91987
     default: 1.5708
     enabled: false
   - id: head_eye_left_y
@@ -488,8 +488,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 0.7855
+    limit_max: 2.3561
     default: 1.5708
     enabled: false
   - id: head_eye_left_x
@@ -501,8 +501,8 @@ actuators:
     offset: 1.5708
     direction: 1
     scale: 1
-    limit_min: 0
-    limit_max: 3.14159
+    limit_min: 1.22173
+    limit_max: 1.91987
     default: 1.5708
     enabled: false
 sensors:
