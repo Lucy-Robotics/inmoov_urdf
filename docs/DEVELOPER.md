@@ -240,13 +240,13 @@ After hand or auto-calibration, validate in the full stack:
 
 ```bash
 # Mock-hardware path (LucySystemHardware with publish_actuators:=false; no Gazebo, no real motors)
-ros2 launch lucy_bringup lucy.launch.py real:=false rviz:=true
+ros2 launch lucy_bringup lucy.launch.py rviz:=true
 
 # Headless Gazebo (server-only with EGL rendering — camera sensors keep producing frames)
-ros2 launch lucy_bringup lucy.launch.py gazebo:=true headless:=true
+ros2 launch lucy_bringup lucy.launch.py mode:=sim headless:=true
 
 # Gazebo with GUI + RViz (X11 required)
-ros2 launch lucy_bringup lucy.launch.py gazebo:=true rviz:=true
+ros2 launch lucy_bringup lucy.launch.py mode:=sim rviz:=true
 ```
 
 Hot-reload after editing the URDF:
