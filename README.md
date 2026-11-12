@@ -93,8 +93,8 @@ ros2 launch inmoov_urdf gazebo.launch.py headless:=true   # server-only, EGL ren
 ros2 launch inmoov_urdf gazebo.launch.py start_rviz:=true # spawn RViz too
 
 # Full stack (rosbridge + web panel) — from lucy_bringup
-ros2 launch lucy_bringup lucy.launch.py real:=false rviz:=true
-ros2 launch lucy_bringup lucy.launch.py gazebo:=true real:=false
+ros2 launch lucy_bringup lucy.launch.py rviz:=true
+ros2 launch lucy_bringup lucy.launch.py mode:=sim
 ```
 
 Common arguments:
