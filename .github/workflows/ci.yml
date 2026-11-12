@@ -13,4 +13,12 @@ jobs:
     uses: Lucy-Robotics/.github/.github/workflows/robot-package-ci.yaml@cma/fix-robot-package-ci-generalize
     with:
       package_name: inmoov_urdf
+
+  upload-coverage:
+    needs: build-and-test
+    uses: Lucy-Robotics/.github/.github/workflows/codecov-upload.yaml@cma/fix-robot-package-ci-generalize
+    with:
+      artifact_name: coverage-inmoov_urdf
+      flags: inmoov_urdf
+      name: inmoov_urdf
     secrets: inherit
