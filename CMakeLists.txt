@@ -14,11 +14,13 @@ if(BUILD_TESTING)
   set(ament_cmake_flake8_CONFIG_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ament_flake8.ini")
   find_package(ament_cmake_pytest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
-  # uncrustify/cppcheck are often missing on RoboStack Windows runners
-  set(AMENT_LINT_AUTO_EXCLUDE
-    ament_cmake_uncrustify
-    ament_cmake_cppcheck
-  )
+  # uncrustify/cppcheck are often missing on RoboStack macOS/Windows runners
+  if(APPLE OR WIN32)
+    list(APPEND AMENT_LINT_AUTO_EXCLUDE
+      ament_cmake_uncrustify
+      ament_cmake_cppcheck
+    )
+  endif()
   if(WIN32)
     list(APPEND AMENT_LINT_AUTO_EXCLUDE ament_cmake_cpplint)
   endif()
