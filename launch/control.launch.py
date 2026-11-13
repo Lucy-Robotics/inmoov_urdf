@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright 2025 Sentience Robotics Team
+# Copyright 2025 Lucy Robotics Team
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,13 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Real robot / RViz-only: lucy_control_supervisor owns RSP + ros2_control_node + spawners.
+# Real robot / RViz-only: lucy_control_supervisor owns RSP + ros2_control_node
+# + controller spawners (so pipeline RELOAD can re-activate them).
 
 from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, TimerAction
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 import yaml
@@ -107,25 +108,20 @@ def generate_launch_description():
         description="Generated ros2_control xacro basename (generated_files in active.yaml)",
     )
 
-    supervisor_launch = TimerAction(
-        period=2.0,
-        actions=[
-            IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    [supervisor_share, "/launch/control_supervisor.launch.py"]
-                ),
-                launch_arguments={
-                    "urdf_path": LaunchConfiguration("urdf_path"),
-                    "base_path": LaunchConfiguration("base_path"),
-                    "controllers_yaml": LaunchConfiguration("controllers_yaml"),
-                    "use_gazebo_sim": "false",
-                    "use_mock_hardware": LaunchConfiguration("use_mock_hardware"),
-                    "gazebo_only": "false",
-                    "autostart": "true",
-                    "ros2_control_file": LaunchConfiguration("ros2_control_file"),
-                }.items(),
-            )
-        ],
+    supervisor_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [supervisor_share, "/launch/control_supervisor.launch.py"]
+        ),
+        launch_arguments={
+            "urdf_path": LaunchConfiguration("urdf_path"),
+            "base_path": LaunchConfiguration("base_path"),
+            "controllers_yaml": LaunchConfiguration("controllers_yaml"),
+            "use_gazebo_sim": "false",
+            "use_mock_hardware": LaunchConfiguration("use_mock_hardware"),
+            "gazebo_only": "false",
+            "autostart": "true",
+            "ros2_control_file": LaunchConfiguration("ros2_control_file"),
+        }.items(),
     )
 
     return LaunchDescription(
