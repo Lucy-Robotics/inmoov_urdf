@@ -22,36 +22,35 @@ For **InMoov i1 vs i2** scope and how to extend the YAML with **head / expressio
 - **`firmware`**: `source_dir`, `build_dir` — paths relative to the micro-ROS firmware workspace for the pipeline.
 - **`controller_manager`**: e.g. `update_rate`.
 - **`boards`**: ordered map of board id → `serial_id` (optional USB serial for `picotool --ser`, alphanumeric or empty), **`board_class`** (`internal_servo_only` \| `internal_servo_i2c_pwm`), **`internal_servo_slots`** (max valid `physical_pin` for actuators on that board), firmware target, compile definition, micro-ROS actuator/sensor topics, and `controller` (`name`, `type`). **Order** of keys is the order of generated ros2_control blocks and controller sections. **Board id** is also the firmware C basename: `config_<board_id>.c`. **No `/dev/ttyACM*`** here — serial devices are launch-time (`lucy_bringup` args), not committed hardware truth.
-- **`actuators`**: list of actuators with `urdf_joint` (must match URDF), `board`, `virtual_pin` (contiguous per board, used for firmware ordering and for `JointState.position` indices on that board’s actuator topic), `physical_pin` (**1..`boards.<id>.internal_servo_slots`**: the `N` in `INTERNAL_SERVO_N` emitted in firmware C — not GPIO index and not “+1” from another convention), `servo_type`, calibration (`offset_deg`, `direction`, `scale`), limits, `enabled` (if `false`, the row is still listed in generated `ros2_control` and trajectory controllers, but omitted from firmware C so the servo is not driven on the Pico).
+- **`actuators`**: list of actuators with `urdf_joint` (must match URDF), `board`, `virtual_pin` (contiguous per board, used for firmware ordering and for `JointState.position` indices on that board’s actuator topic), `physical_pin` (**1..`boards.<id>.internal_servo_slots`**: the `N` in `INTERNAL_SERVO_N` emitted in firmware C — not GPIO index and not “+1” from another convention), `servo_type`, calibration (`offset`, `direction`, `scale`), limits (`limit_min`, `limit_max`, `default`, all radians), `enabled` (if `false`, the row is still listed in generated `ros2_control` and trajectory controllers, but omitted from firmware C so the servo is not driven on the Pico).
 - **`sensors`**: finger pressure sensors; `associated_actuator` references an actuator `id`.
 
-## Hardware angle limits (`servo_*_deg`)
+## Hardware angle limits (`limit_min` / `limit_max` / `default`)
 
-`servo_min_deg`, `servo_max_deg`, and `servo_default_deg` are **servo-frame degrees**: the angle the motor actually sees, before any URDF visualization convention. They bound electrical/mechanical travel in firmware and in **LucySystemHardware** after the URDF→servo mapping.
+`limit_min`, `limit_max`, and `default` are **servo-frame radians**: the angle the motor actually sees, before any URDF joint convention. They bound electrical/mechanical travel in firmware and in **LucySystemHardware** after the URDF→servo mapping. `default` must lie in `[limit_min, limit_max]`. Schema validation rejects the old `servo_*_deg` and `offset_deg` keys.
 
-They are **not** the same as the LCP slider’s joint-space meaning unless `offset_deg = 0`, `direction = ±1`, and `scale = 1`. The control panel slider is labeled in **servo degrees**; trajectory commands on the wire stay in **URDF radians**.
+They match the LCP slider’s joint-space value only when `offset = 0`, `direction = ±1`, and `scale = 1`. Trajectory commands on the wire stay in **URDF radians**.
 
 ## URDF `<limit>` (joint-space envelope)
 
-Each `urdf_joint` has `<limit lower="…" upper="…"/>` in the URDF (radians). **`lucy_config_generator`** copies those onto each actuated joint’s ros2_control position **command_interface** as `<param name="min">` / `<param name="max">` in `description/ros2_control/inmoov_ros2_control.xacro`. **LucySystemHardware** (real hardware and RViz/mock) clamps `hw_commands_` to that envelope before converting to actuator degrees, so MoveIt, teleop, CLI, and the LCP can command past the URDF wall in the UI but the stack stops at the realized angle. `/joint_states` reports the clamped joint position.
+Each `urdf_joint` has `<limit lower="…" upper="…"/>` in the URDF (radians). **`lucy_config_generator`** copies those onto each actuated joint’s ros2_control position **command_interface** as `<param name="min">` / `<param name="max">` in `description/ros2_control/inmoov_ros2_control.xacro`. **LucySystemHardware** (real hardware and RViz/mock) clamps `hw_commands_` to that envelope before converting to servo radians, so MoveIt, teleop, CLI, and the LCP can command past the URDF wall in the UI but the stack stops at the realized angle. `/joint_states` reports the clamped joint position.
 
 **Gazebo** uses stock **`gz_ros2_control/GazeboSimSystem`**, which does **not** apply those `min`/`max` params in `write()` — only **LucySystemHardware** enforces the ros2_control URDF envelope today. Gazebo may still respect joint limits from the spawned model/physics depending on how the world is built; that is separate from ros2_control clamping. After changing generated limits for real/mock, reload the control stack; for Gazebo topology changes, **restart Gazebo** so `gz_ros2_control` reloads the URDF.
 
 RViz-only / mock hardware uses **`lucy_ros2_control/LucySystemHardware`** with `publish_actuators:=false` so URDF limits are enforced the same way as on real hardware, without micro-ROS topics.
 
-## `offset_deg`, `direction`, and `scale` (URDF command ↔ servo)
+## `offset`, `direction`, and `scale` (URDF command ↔ servo)
 
-Symmetric mapping (used by **LucySystemHardware**, firmware, and the LCP):
+Symmetric mapping in radians (used by **LucySystemHardware** and firmware):
 
 ```text
-joint_deg = (servo_deg - offset_deg) * direction * scale
-servo_deg = joint_deg / (direction * scale) + offset_deg
-joint_rad = deg_to_rad(joint_deg)
+joint_rad = (servo_rad - offset) * direction * scale
+servo_rad = joint_rad / (direction * scale) + offset
 ```
 
 - **`direction`**: `+1` or `-1` if the horn is mounted opposite the positive URDF axis.
 - **`scale`**: ratio between a change in **commanded joint angle** and **servo angle** when the linkage is not 1:1.
-- **`offset_deg`**: shift so URDF “zero” matches the real neutral assembly (e.g. `offset_deg: 90` with a 0–180° servo maps URDF 0° to servo 90°).
+- **`offset`**: servo-frame shift so URDF zero matches the real neutral assembly (e.g. `offset: 1.5708` with a 0–π servo maps URDF 0 to servo π/2).
 
 These are **calibration between ros2_control / URDF joint commands and the servo command**, not an RViz-only layer. Generated ros2_control params are the source of truth for the plugin and for the panel’s publish/subscribe conversion.
 
