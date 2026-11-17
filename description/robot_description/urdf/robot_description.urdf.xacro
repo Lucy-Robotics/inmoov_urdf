@@ -1277,7 +1277,7 @@
         <mesh filename="${mesh_dir}/Texture.241.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.left.bicep.full.007">
+    <visual name="i01.left.bicep.full.007" joint="left_wrist_z_link_joint">
       <material name="Material.White"/>
       <origin rpy="-0.00000 0.00000 0.00000" xyz="${model_scale * -2.07702} ${model_scale * 0.12073} ${model_scale * -10.83652}"/>
       <geometry>
@@ -2815,7 +2815,7 @@
         <mesh filename="${mesh_dir}/Texture.210.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.right.bicep.full.007">
+    <visual name="i01.right.bicep.full.007" joint="right_wrist_z_link_joint">
       <material name="Material.White"/>
       <origin rpy="-0.00000 -0.00000 0.00000" xyz="${model_scale * 2.08125} ${model_scale * 0.12073} ${model_scale * -10.83653}"/>
       <geometry>
@@ -3362,7 +3362,7 @@
         <mesh filename="${mesh_dir}/Texture.089.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.003">
+    <visual name="i01.torso.full.003" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
@@ -3551,7 +3551,7 @@
         <mesh filename="${mesh_dir}/Texture.116.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.030">
+    <visual name="i01.torso.full.030" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
@@ -3649,7 +3649,7 @@
         <mesh filename="${mesh_dir}/Texture.130.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.044">
+    <visual name="i01.torso.full.044" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
@@ -3754,28 +3754,28 @@
         <mesh filename="${mesh_dir}/Texture.145.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.059">
+    <visual name="i01.torso.full.059" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
         <mesh filename="${mesh_dir}/Texture.146.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.060">
+    <visual name="i01.torso.full.060" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
         <mesh filename="${mesh_dir}/Texture.147.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.061">
+    <visual name="i01.torso.full.061" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
         <mesh filename="${mesh_dir}/Texture.148.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.062">
+    <visual name="i01.torso.full.062" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
@@ -3824,7 +3824,7 @@
         <mesh filename="${mesh_dir}/Texture.155.dae" scale="${model_scale * 1.00000} ${model_scale * 1.00000} ${model_scale * 1.00000}"/>
       </geometry>
     </visual>
-    <visual name="i01.torso.full.069">
+    <visual name="i01.torso.full.069" joint="i01.head.neck.001_link_joint">
       <material name="Material.White"/>
       <origin rpy="0.06589 -0.00000 -0.00000" xyz="${model_scale * 0.00246} ${model_scale * 1.11602} ${model_scale * -11.08254}"/>
       <geometry>
