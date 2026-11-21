@@ -17,6 +17,7 @@
 
 from __future__ import annotations
 
+import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -86,3 +87,50 @@ def test_model_scale_property_resolves(urdf_root):
     """Xacro should fully expand model_scale (no leftover ${...} tokens)."""
     text = ET.tostring(urdf_root, encoding="unicode")
     assert "${model_scale" not in text, "model_scale property left unevaluated"
+
+
+def _urdf_limits(urdf_root) -> dict[str, tuple[float, float]]:
+    return {
+        j.get("name"): (float(j.find("limit").get("lower")), float(j.find("limit").get("upper")))
+        for j in urdf_root.findall("joint")
+        if j.find("limit") is not None
+    }
+
+
+def _off(value, expected) -> bool:
+    return abs(float(value) - expected) > 1e-4
+
+
+def test_hardware_limits_match_urdf_limits(urdf_root):
+    """The servo travel in active.yaml must map onto exactly the URDF joint range."""
+    _, _, _, active = _paths()
+    actuators = yaml.safe_load(active.read_text(encoding="utf-8"))["actuators"]
+    urdf_limits = _urdf_limits(urdf_root)
+    mismatched = []
+    for a in actuators:
+        k = float(a["direction"]) * float(a["scale"])
+        joint_range = sorted(
+            (float(a[key]) - float(a["offset"])) * k for key in ("limit_min", "limit_max")
+        )
+        lower, upper = urdf_limits[a["urdf_joint"]]
+        if abs(joint_range[0] - lower) > 1e-3 or abs(joint_range[1] - upper) > 1e-3:
+            mismatched.append(f"{a['id']}: hardware {joint_range} vs URDF [{lower}, {upper}]")
+    assert not mismatched, "\n".join(mismatched)
+
+
+def test_ros2_control_command_ranges_match_urdf_limits(urdf_root):
+    """The generated command_interface min/max must follow the URDF joint limits."""
+    description = Path(__file__).resolve().parents[1] / "description"
+    text = (description / "ros2_control/inmoov_ros2_control.xacro").read_text(encoding="utf-8")
+    urdf_limits = _urdf_limits(urdf_root)
+    pattern = re.compile(
+        r'<joint name="([^"]+)">.*?<param name="min">([^<]+)</param>\s*'
+        r'<param name="max">([^<]+)</param>',
+        re.S,
+    )
+    mismatched = [
+        f"{name}: command [{lo}, {hi}] vs URDF {urdf_limits[name]}"
+        for name, lo, hi in pattern.findall(text)
+        if _off(lo, urdf_limits[name][0]) or _off(hi, urdf_limits[name][1])
+    ]
+    assert not mismatched, "\n".join(mismatched)
