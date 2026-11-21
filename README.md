@@ -36,7 +36,7 @@ inmoov_urdf/
 │   ├── ros2_control/
 │   │   └── inmoov_ros2_control.xacro             # hardware interfaces (real / mock)
 │   └── gazebo/
-│       ├── inmoov_gazebo_physics.xacro           # static / friction / self_collide (sim only)
+│       ├── inmoov_gazebo_physics.xacro           # world anchor / friction / self_collide (sim only)
 │       ├── gazebo.xacro                          # generated gz_ros2_control plugin + camera sensors (sim only)
 │       └── gazebo_bridge.yaml                    # generated ros_gz_bridge topic map (sim only)
 ├── worlds/default.sdf       # minimal world used by gazebo.launch.py

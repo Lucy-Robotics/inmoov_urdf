@@ -40,7 +40,6 @@ REQUIRED_ACTUATOR = (
     "id",
     "urdf_joint",
     "board",
-    "virtual_pin",
     "physical_pin",
     "servo_type",
     "offset",
@@ -56,7 +55,6 @@ REQUIRED_SENSOR = (
     "type",
     "associated_actuator",
     "board",
-    "virtual_pin",
     "physical_pin",
     "min_value",
     "max_value",
@@ -186,13 +184,6 @@ def validate_hardware_yaml(data: dict[str, Any], urdf_joints: set[str] | None = 
         by_board.setdefault(b, []).append(a)
 
     for board_id, lst in by_board.items():
-        vpins = sorted(int(x["virtual_pin"]) for x in lst)
-        if len(vpins) != len(set(vpins)):
-            raise ValueError(f"board {board_id}: duplicate virtual_pin")
-        if vpins != list(range(len(vpins))):
-            raise ValueError(
-                f"board {board_id}: virtual_pin must be contiguous from 0..N-1, got {vpins}"
-            )
         for a in lst:
             lo = a["limit_min"]
             hi = a["limit_max"]
@@ -260,7 +251,6 @@ def test_active_yaml_validates():
 @pytest.mark.parametrize(
     "name,msg",
     [
-        ("invalid_duplicate_vpin.yaml", "duplicate virtual_pin"),
         ("invalid_missing_board.yaml", "unknown board"),
         ("invalid_servo_default_out_of_range.yaml", "default"),
     ],

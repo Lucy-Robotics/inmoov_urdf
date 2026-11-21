@@ -1,3 +1,4 @@
 urdf_path: description/urdf/inmoov.urdf.xacro
 base_path: description
 controllers_yaml: config/controllers.yaml
+bridge: mcu_bridge
