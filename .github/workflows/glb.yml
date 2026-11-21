@@ -1,0 +1,20 @@
+name: GLB meshes
+
+on:
+  pull_request:
+    paths: ["**/*.dae", "**/*.DAE", "**/*.stl", "**/*.STL", "**/*.obj", "**/*.OBJ", "**/*.mtl"]
+
+permissions:
+  contents: write
+
+jobs:
+  glb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.head_ref }}
+      - uses: Lucy-Robotics/mesh_tools@master
+        with:
+          commit: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
