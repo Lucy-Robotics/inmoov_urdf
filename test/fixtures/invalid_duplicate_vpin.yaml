@@ -19,12 +19,12 @@ actuators:
     virtual_pin: 0
     physical_pin: 10
     servo_type: "270"
-    offset_deg: 0.0
+    offset: 0
     direction: 1
     scale: 1.0
-    servo_min_deg: -1.0
-    servo_max_deg: 1.0
-    servo_default_deg: 0.0
+    limit_min: -0.01745
+    limit_max: 0.01745
+    default: 0
     enabled: false
   - id: b
     urdf_joint: left_shoulder_x_link_joint
@@ -32,11 +32,11 @@ actuators:
     virtual_pin: 0
     physical_pin: 11
     servo_type: "270"
-    offset_deg: 0.0
+    offset: 0
     direction: 1
     scale: 1.0
-    servo_min_deg: -1.0
-    servo_max_deg: 1.0
-    servo_default_deg: 0.0
+    limit_min: -0.01745
+    limit_max: 0.01745
+    default: 0
     enabled: false
 sensors: []
